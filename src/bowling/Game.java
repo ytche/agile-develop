@@ -4,39 +4,54 @@ package bowling;
  * @author cheyantao
  */
 public class Game {
-    private int insScore=0;
-    private  int[] itsThrows= new int[21];
-    private int itsCurrentThrow=0;
+    private int itsCurrentFrame=1;
+    private boolean firstThrowInFrame =true;
+    private Scorer itsScorer =new Scorer();
+
+
     public int score(){
-        return insScore;
+        return this.scoreForFrame(itsCurrentFrame);
     }
+
     public void add(int pins){
-        itsThrows[itsCurrentThrow++]=pins;
-        this.insScore+=pins;
+        itsScorer.addThrow(pins);
+        adJustCurrentFrame(pins);
     }
-//    被重构的第一版
-//    public int scoreForFrame(int frame) {
-//        int score=0;
-//        for (int ball=0;frame>0&&(ball<itsCurrentThrow);ball+=2,frame--){
-//            score += itsThrows[ball]+itsThrows[ball+1];
-//        }
-//        return score;
-//    }
+
+    private void adJustCurrentFrame(int pins) {
+        if (this.firstThrowInFrame){
+            if (lastBallInFrame(pins)) {
+                advanceFrame();
+            }else {
+                firstThrowInFrame=false;
+            }
+        }else {
+            this.firstThrowInFrame =true;
+            this.advanceFrame();
+        }
+
+    }
+
+    private boolean lastBallInFrame(int pins) {
+        return strick(pins)||(!firstThrowInFrame);
+    }
+
+    private boolean strick(int pins) {
+        return firstThrowInFrame&&pins==10;
+    }
+
+    private boolean adjustFrameForStrike(int pins) {
+        if (pins==10){
+            advanceFrame();
+            return true;
+        }
+        return false;
+    }
 
     public int scoreForFrame(int theFrame) {
-        int ball=0;
-        int score=0;
-        for (int currentFrame=0;currentFrame<theFrame;currentFrame++){
-            //  score+=itsThrows[ball++]+itsThrows[ball++];
-            int firstThrow=itsThrows[ball++];
-            int secondThrow=itsThrows[ball++];
-            int frameScore=firstThrow+secondThrow;
-            if (frameScore==10){
-                score+=frameScore+itsThrows[ball];
-            }else {
-                score+=frameScore;
-            }
-        }
-        return score;
+        return itsScorer.scoreForFrame(theFrame);
+    }
+    private void advanceFrame(){
+        itsCurrentFrame=Math.min(10,itsCurrentFrame+1);
     }
 }
