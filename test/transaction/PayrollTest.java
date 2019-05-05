@@ -50,4 +50,34 @@ public class PayrollTest {
         assert 100.00==salesReceipt.getAmount();
 
     }
+
+    @Test
+    public void testAddServiceCharge(){
+        int empId=2;
+        AddHourlyEmployee addHourlyEmployee=new AddHourlyEmployee(empId,"bill","home",15.25);
+        addHourlyEmployee.execute();
+        Employee e=PayrollDatabase.GPayrollDatabase.getEmployee(empId);
+        assert e!=null;
+        int memberId=86;
+        UnionAffiliation af=new UnionAffiliation(memberId,12.5);
+        e.setAffiliation(af);
+        PayrollDatabase.GPayrollDatabase.addUnionMember(memberId,e);
+        ServiceChargeTransaction sct=new ServiceChargeTransaction(memberId,new Date(11,01,2001),12.95);
+        sct.execute();
+        ServiceCharge sc=af.getServiceCharge();
+        assert  sc!=null;
+        assert sc.getAmount()==12.95;
+
+    }
+
+    @Test
+    public void  testChagenNameTransaction(){
+        int empId=2;
+        AddHourlyEmployee t=new AddHourlyEmployee(empId,"bill","home",15.25);
+        t.execute();
+        ChangeNameTransaction cnt=new ChangeNameTransaction(empId,"bob");
+        cnt.execute();
+        Employee e=PayrollDatabase.GPayrollDatabase.getEmployee(empId);
+        assert "bob".equals(e.getName());
+    }
 }

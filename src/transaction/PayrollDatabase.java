@@ -11,6 +11,7 @@ import java.util.Map;
 public class PayrollDatabase {
     public static PayrollDatabase GPayrollDatabase=new PayrollDatabase();
     private static Map<Integer, Employee> itsEmployees=new HashMap<>();
+    private static Map<Integer,Employee> itsMemberEmployees =new HashMap<>();
 
     public  Employee getEmployee(int empId) {
         return itsEmployees.get(empId);
@@ -25,5 +26,13 @@ public class PayrollDatabase {
 
     public void deleteEmployee(int empId) {
         itsEmployees.remove(empId);
+    }
+
+    public void addUnionMember(int memberId, Employee e) {
+        itsMemberEmployees.put(memberId,e);
+    }
+
+    public Employee getUnionMember(int itsMemberId) {
+        return itsMemberEmployees.get(itsMemberId);
     }
 }

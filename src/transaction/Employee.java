@@ -12,6 +12,7 @@ public class Employee {
     private PaymentClassification classification;
     private PaymentSchedule schedule;
     private PaymentMethod method;
+    private UnionAffiliation affiliation;
 
     public Employee() {
     }
@@ -76,5 +77,13 @@ public class Employee {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public UnionAffiliation getAffiliation() {
+        return this.affiliation;
+    }
+
+    public void setAffiliation(UnionAffiliation affiliation) {
+        this.affiliation = affiliation;
     }
 }
