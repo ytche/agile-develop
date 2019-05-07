@@ -1,12 +1,12 @@
 package transaction;
 
 public class UnionAffiliation implements Affiliation{
-    private double amount;
+    private double dues;
     private int memberId;
     private  ServiceCharge serviceCharge;
 
-    public UnionAffiliation( int memberId,double amount) {
-        this.amount = amount;
+    public UnionAffiliation( int memberId,double dues) {
+        this.dues = dues;
         this.memberId = memberId;
     }
 
@@ -16,5 +16,9 @@ public class UnionAffiliation implements Affiliation{
 
     public ServiceCharge getServiceCharge() {
         return serviceCharge;
+    }
+
+    public double getDues() {
+        return this.dues;
     }
 }

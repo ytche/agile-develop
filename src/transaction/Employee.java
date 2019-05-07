@@ -12,7 +12,7 @@ public class Employee {
     private PaymentClassification classification;
     private PaymentSchedule schedule;
     private PaymentMethod method;
-    private UnionAffiliation affiliation;
+    private Affiliation affiliation;
 
     public Employee() {
     }
@@ -79,11 +79,11 @@ public class Employee {
         this.address = address;
     }
 
-    public UnionAffiliation getAffiliation() {
+    public Affiliation getAffiliation() {
         return this.affiliation;
     }
 
-    public void setAffiliation(UnionAffiliation affiliation) {
+    public void setAffiliation(Affiliation affiliation) {
         this.affiliation = affiliation;
     }
 }

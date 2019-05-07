@@ -5,7 +5,7 @@ package transaction;
  */
 public class ChangeNameTransaction extends ChangeEmployeeTransaction {
     private String name;
-    public ChangeNameTransaction(int empId, String bob) {
+    public ChangeNameTransaction(int empId, String name) {
         super(empId);
         this.name=name;
     }

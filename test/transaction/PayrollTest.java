@@ -3,7 +3,6 @@ package transaction;
 import org.junit.Test;
 
 public class PayrollTest {
-    //todo 完成19.9,接下来是19.10
     @Test
     public void TestDeleteEmployee() {
         int empId = 3;
@@ -80,4 +79,42 @@ public class PayrollTest {
         Employee e=PayrollDatabase.GPayrollDatabase.getEmployee(empId);
         assert "bob".equals(e.getName());
     }
+    @Test
+    public void testChangeHourlyTransaction(){
+        int empId=3;
+        AddCommissionedEmployee t=new AddCommissionedEmployee(empId,"Lance","home",2500,3.2);
+        t.execute();
+        ChangeHourlyTransaction cht=new ChangeHourlyTransaction(empId,27.52);
+        cht.execute();
+        Employee e=PayrollDatabase.GPayrollDatabase.getEmployee(empId);
+        assert  e!=null;
+        PaymentClassification pc=e.getPaymentClassification();
+        assert pc!=null;
+        assert pc instanceof HourlyClassification;
+        HourlyClassification hc= (HourlyClassification) pc;
+        assert hc.getHourlyRate()==27.52;
+        PaymentSchedule ps=e.getSchedule();
+        assert ps instanceof WeeklySchedule;
+    }
+
+    @Test
+    public void testChangeMemberTransaction(){
+        int empId=2;
+        int memberId=7734;
+        AddHourlyEmployee t=new AddHourlyEmployee(empId,"Bill","Home",15.25);
+        t.execute();
+        ChangeMemberTransaction cmt =new ChangeMemberTransaction(empId,memberId,99.42);
+        cmt.execute();
+        Employee e=PayrollDatabase.GPayrollDatabase.getEmployee(empId);
+        assert e!=null;
+        Affiliation af=e.getAffiliation();
+        assert  af!=null;
+        assert af instanceof UnionAffiliation;
+        UnionAffiliation uf= (UnionAffiliation) af;
+        assert 99.42==uf.getDues();
+        Employee member=PayrollDatabase.GPayrollDatabase.getUnionMember(memberId);
+        assert member!=null;
+        assert e.equals(member);
+    }
+    //todo 19.34
 }
