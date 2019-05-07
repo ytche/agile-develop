@@ -35,4 +35,8 @@ public class PayrollDatabase {
     public Employee getUnionMember(int itsMemberId) {
         return itsMemberEmployees.get(itsMemberId);
     }
+
+    public void removeUnionMember(int memberId) {
+        itsMemberEmployees.remove(memberId);
+    }
 }

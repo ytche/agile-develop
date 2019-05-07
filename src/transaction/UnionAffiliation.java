@@ -21,4 +21,8 @@ public class UnionAffiliation implements Affiliation{
     public double getDues() {
         return this.dues;
     }
+
+    public int getMemberId() {
+        return memberId;
+    }
 }
